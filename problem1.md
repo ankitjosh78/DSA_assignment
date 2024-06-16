@@ -40,94 +40,64 @@
   C++ code:
 
   ```c++
-    #include <iostream>
-    #include <unordered_map>
-    #include <vector>
-    
-    int countSubarraysWithSumX(const std::vector<int>& arr, int X) {
-        std::unordered_map<int, int> prefixSumFreq;
-        int prefixSum = 0;
-        int count = 0;
-    
-        // Initial condition for subarrays that start from the beginning
-        prefixSumFreq[0] = 1;
-    
-        for (int num : arr) {
-            prefixSum += num;
-    
-            // Check if there exists a prefix sum that would form the required sum
-            if (prefixSumFreq.find(prefixSum - X) != prefixSumFreq.end()) {
-                count += prefixSumFreq[prefixSum - X];
-            }
-    
-            // Update the frequency of the current prefix sum
-            prefixSumFreq[prefixSum]++;
-        }
-    
-        return count;
-    }
-    
+    #include <bits/stdc++.h>
+    #define ll long long int
+    using namespace std;
+
     int main() {
-        int n, X;
-        std::cin >> n >> X;
-    
-        std::vector<int> arr(n);
-        for (int i = 0; i < n; ++i) {
-            std::cin >> arr[i];
+      ll n, x;
+      cin >> n >> x;
+      vector<ll> arr(n);
+      for (int i = 0; i < n; i++) {
+        cin >> arr[i];
+      }
+
+      ll sum = 0LL;
+      map<ll, ll> mp;
+      ll ans = 0;
+      for (int i = 0; i < n; i++) {
+        sum += arr[i];
+        if (sum == x) {
+          ans++;
         }
-    
-        int result = countSubarraysWithSumX(arr, X);
-        std::cout << "Total number of subarrays with sum " << X << " is: " << result << std::endl;
-    
-        return 0;
-    }
+        if (mp.find(sum - x) != mp.end()) {
+          ans += mp[sum - x];
+        }
+        mp[sum]++;
+      }
+      cout << ans << endl;
   ```
 
   Java code:
 ```java
-import java.util.HashMap;
-import java.util.Scanner;
-
-public class SubarraySum {
-    
-    public static int countSubarraysWithSumX(int[] arr, int X) {
-        HashMap<Integer, Integer> prefixSumFreq = new HashMap<>();
-        int prefixSum = 0;
-        int count = 0;
-
-        // Initial condition for subarrays that start from the beginning
-        prefixSumFreq.put(0, 1);
-
-        for (int num : arr) {
-            prefixSum += num;
-
-            // Check if there exists a prefix sum that would form the required sum
-            if (prefixSumFreq.containsKey(prefixSum - X)) {
-                count += prefixSumFreq.get(prefixSum - X);
-            }
-
-            // Update the frequency of the current prefix sum
-            prefixSumFreq.put(prefixSum, prefixSumFreq.getOrDefault(prefixSum, 0) + 1);
-        }
-
-        return count;
-    }
-
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-
-        int n = scanner.nextInt();
-        int X = scanner.nextInt();
-        int[] arr = new int[n];
-
-        for (int i = 0; i < n; i++) {
-            arr[i] = scanner.nextInt();
-        }
-
-        int result = countSubarraysWithSumX(arr, X);
-        System.out.println("Total number of subarrays with sum " + X + " is: " + result);
-        
-        scanner.close();
-    }
-}
+  import java.util.*;
+  
+  public class Main {
+      public static void main(String[] args) {
+          Scanner scanner = new Scanner(System.in);
+  
+          long n = scanner.nextLong();
+          long x = scanner.nextLong();
+          long[] arr = new long[(int)n];
+          for (int i = 0; i < n; i++) {
+              arr[i] = scanner.nextLong();
+          }
+  
+          long sum = 0;
+          Map<Long, Long> mp = new HashMap<>();
+          long ans = 0;
+          for (int i = 0; i < n; i++) {
+              sum += arr[i];
+              if (sum == x) {
+                  ans++;
+              }
+              if (mp.containsKey(sum - x)) {
+                  ans += mp.get(sum - x);
+              }
+              mp.put(sum, mp.getOrDefault(sum, 0L) + 1);
+          }
+  
+          System.out.println(ans);
+      }
+  }
 ```
