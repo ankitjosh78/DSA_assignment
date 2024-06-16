@@ -43,61 +43,83 @@
     #include <bits/stdc++.h>
     #define ll long long int
     using namespace std;
-
+    
     int main() {
-      ll n, x;
-      cin >> n >> x;
-      vector<ll> arr(n);
-      for (int i = 0; i < n; i++) {
-        cin >> arr[i];
-      }
+        ll n, x; // n is the number of elements, x is the target sum
+        cin >> n >> x; // Input the number of elements and the target sum
+        vector<ll> arr(n); // Array to store the elements
+        for (int i = 0; i < n; i++) {
+            cin >> arr[i]; // Input each element into the array
+        }
+    
+        ll sum = 0LL; // Variable to store the current prefix sum
+        map<ll, ll> mp; // Map to store the frequency of prefix sums
+        ll ans = 0; // Variable to store the number of subarrays with sum equal to x
+    
+        // Iterate through each element in the array
+        for (int i = 0; i < n; i++) {
+            sum += arr[i]; // Update the prefix sum with the current element
+    
+            // Check if the current prefix sum equals x
+            if (sum == x) {
+                ans++; // Increment the count of subarrays with sum equal to x
+            }
+    
+            // Check if there exists a prefix sum such that (current prefix sum - desired sum) exists in the map
+            if (mp.find(sum - x) != mp.end()) {
+                ans += mp[sum - x]; // Add the count of such subarrays to the answer
+            }
+    
+            mp[sum]++; // Increment the frequency of the current prefix sum in the map
+        }
+    
+        cout << ans << endl; // Output the total number of subarrays with sum equal to x
+    }
 
-      ll sum = 0LL;
-      map<ll, ll> mp;
-      ll ans = 0;
-      for (int i = 0; i < n; i++) {
-        sum += arr[i];
-        if (sum == x) {
-          ans++;
-        }
-        if (mp.find(sum - x) != mp.end()) {
-          ans += mp[sum - x];
-        }
-        mp[sum]++;
-      }
-      cout << ans << endl;
   ```
 
   #### Java code:
 ```java
-  import java.util.*;
+  import java.util.HashMap;
+  import java.util.Map;
+  import java.util.Scanner;
   
-  public class Main {
+  public class SubarraySum {
       public static void main(String[] args) {
-          Scanner scanner = new Scanner(System.in);
+          Scanner sc = new Scanner(System.in);
   
-          long n = scanner.nextLong();
-          long x = scanner.nextLong();
-          long[] arr = new long[(int)n];
+          // Input the number of elements and the target sum
+          int n = sc.nextInt();
+          long x = sc.nextLong();
+  
+          long[] arr = new long[n]; // Array to store the elements
           for (int i = 0; i < n; i++) {
-              arr[i] = scanner.nextLong();
+              arr[i] = sc.nextLong(); // Input each element into the array
           }
   
-          long sum = 0;
-          Map<Long, Long> mp = new HashMap<>();
-          long ans = 0;
+          long sum = 0L; // Variable to store the current prefix sum
+          Map<Long, Long> mp = new HashMap<>(); // Map to store the frequency of prefix sums
+          long ans = 0L; // Variable to store the number of subarrays with sum equal to x
+  
+          // Iterate through each element in the array
           for (int i = 0; i < n; i++) {
-              sum += arr[i];
+              sum += arr[i]; // Update the prefix sum with the current element
+  
+              // Check if the current prefix sum equals x
               if (sum == x) {
-                  ans++;
+                  ans++; // Increment the count of subarrays with sum equal to x
               }
+  
+              // Check if there exists a prefix sum such that (current prefix sum - desired sum) exists in the map
               if (mp.containsKey(sum - x)) {
-                  ans += mp.get(sum - x);
+                  ans += mp.get(sum - x); // Add the count of such subarrays to the answer
               }
+  
+              // Increment the frequency of the current prefix sum in the map
               mp.put(sum, mp.getOrDefault(sum, 0L) + 1);
           }
   
-          System.out.println(ans);
+          System.out.println(ans); // Output the total number of subarrays with sum equal to x
       }
   }
-```
+  ```
