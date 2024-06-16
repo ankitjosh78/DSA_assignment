@@ -37,7 +37,7 @@
 
   We will use a hash map to store the frequency of prefix sums encountered.
 
-  C++ code:
+  #### C++ code:
 
   ```c++
     #include <bits/stdc++.h>
@@ -68,7 +68,7 @@
       cout << ans << endl;
   ```
 
-  Java code:
+  #### Java code:
 ```java
   import java.util.*;
   
